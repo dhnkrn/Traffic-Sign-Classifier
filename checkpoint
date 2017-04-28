@@ -1,0 +1,2 @@
+model_checkpoint_path: "lenet_adam-0"
+all_model_checkpoint_paths: "lenet_adam-0"
