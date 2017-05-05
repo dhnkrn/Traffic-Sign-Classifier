@@ -114,6 +114,7 @@ The final model results, with just 14 epochs of training on CPU were -
 ###Test a Model on New Images
 
 Apart for testing the model on test data, I tested the model with five images of German traffic signs downloaded from the internet.
+
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_1.jpg" width="200" height="200" />
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_2.jpg" width="200" height="200" />
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_3.jpg" width="200" height="200" />
