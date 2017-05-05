@@ -1,9 +1,5 @@
 #**Traffic Sign Recognition** 
 
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
 ---
 
 **Build a Traffic Sign Recognition Project**
@@ -21,27 +17,23 @@ The goals / steps of this project are the following:
 [image1]: ./images/german_1.jpg "Visualization"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[image4]: ./images/german_1.jpg "Traffic Sign 1"
+[image5]: ./images/german_2.jpg "Traffic Sign 2"
+[image6]: ./images/german_3.jpg "Traffic Sign 3"
+[image7]: ./images/german_4.jpg "Traffic Sign 4"
+[image8]: ./images/german_5.jpg "Traffic Sign 5"
 
 
 ---
 
 ###Data Set Summary & Exploration
-
-####1. Summary of the dataset.
-
-Number of training examples = 34799
-Number of validation examples = 4410
-Number of testing examples = 12630
-Image data shape = (32, 32, 3)
-pixel value max= 255 min= 0
-Number of classes = 43
-
-####2. Vizualization of the dataset.
+Some key  statistics:
+  Number of training examples = 34799
+  Number of validation examples = 4410
+  Number of testing examples = 12630
+  Image data shape = (32, 32, 3) i.e., image has a resolution of 32x32 pixels with each made of RGB components
+  pixel value ranges between max=255 and  min=0
+  Number of classes = 43 unique traffic signs
 
 Here is an exploratory vizualization of the data set. It is a bar chart showing how the data ...
 
@@ -92,16 +84,15 @@ ClassID SignName                                                % Training  % Va
 42      End of no passing by vehicles over 3.5 metric tons       0.60       0.68
 
 ###Design and Test a Model Architecture
-The pre-processing steps I used are-
-1. Conversion to gray scale - color is not a distinguishing feature for traffic signs. IOW there are no two traffic signs with different color but same symbols. 
-2. Center the image values -  (x_train-128.0)/128.0 as these values work with CNNs that have RELU activations.
+The image input goes through standard pre-processing steps meant for images. The steps employed are-
+1. Grayscale conversion - image color is not a distinguishing feature for traffic signs. IOW there are no two traffic signs with different colors and same symbol.
+2. Centering the image values -  (x_train-128.0)/128.0 as these values work well with CNNs that have RELU activations.
 
 Images before and after pre-processing.
 ![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/before.png)
 ![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/after.png)
 
 My model consisted of the following layers based on LeNet architecture.
-
 
 | Input         	        	| grayscale image   						    |        32x32x1          	 
 | Convolution1     5x5x1x6| 1x1x1 stride, VALID padding |outputs 28x28x6 	 
@@ -119,60 +110,38 @@ My model consisted of the following layers based on LeNet architecture.
 | Fully connected				84x43|                             |outputs 43
 | Softmax               		|
 
+To train the model, I used Stochastic Gradient Descent optimized by AdamOptimizer at a learning rate of 0.001. Each batch was a randomized sample of 128 training samples. The loss converged for the validation set at around 15 epochs training on CPU.
 
-####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+The approach to classify the traffic symbols was to implement a standard Lenet-5 CNN and iteratively tune it to improve performance for this specific dataset. The Lenet-5 model comprises of a stack of two convolution layers and three fully connected layers with RELU activations interleaved betweeen them. The convolutions layers outputs are also fed through MaxPooling layers after RELU. One of the changes that improved performance for this dataset is the inclusion of dropout layers connected to fully-connected layers. This was added when I noticed the model was overfitting to the training data set. Learning rate, batch size and the probablity for the dropout layers were the most important hyperparameters that I had to tune. My initial learning rate of 0.1 with the GradientDescent optimizer was failing to train, possibly getting stuck at a local optima. Reducing learning rate by an order was sufficient to get the model to train. I also switched the optimizer to AdamOptimizer as it converged significantly faster than GradientDescent. 
 
-To train the model, I used an ....
-
-####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
-
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ?  0.944898
-* test set accuracy of ? 
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+The final model results, with just 14 epochs of training on CPU were - 
+* Training set accuracy of 0.993534
+* Validation set accuracy of  0.944898
+* Test set accuracy 0.923674 
 
 ###Test a Model on New Images
 
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
-
-Here are five German traffic signs that I found on the web:
-
+Apart for testing the model on test data, I tested the model with five images of German traffic signs downloaded from the internet.
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
 
-The first image might be difficult to classify because ...
+One of the interesting things I noticed was the model fails to classify a "known" traffic sign if the sign is not centered  or does not cover a significant part of the image. Cropping the image to mostly include just the sign gives 100% accuracy. This shows that the dataset is insufficient and makes a good case for augmenting the data set with transformed images.
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+Another observation is that model appears to have low precision in some cases. Testing with an unseen input - "No stopping"
+results in the model classifying it with 70% accuracy as a "Roundabout mandatory". I believe, this probablity would have been lesser if the color components were included in images used for training.
+The second and last image are not in the training dataset. 
 
 Here are the results of the prediction:
         Prediction                              Actual
-Sign 1: Road work                  Road work
-Sign 2: Roundabout mandatory       No Stopping - Not in the dataset
-Sign 3: Right-of-way at the next intersection       Right-of-way at the next intersection
-Sign 4: Speed limit (60km/h)       Speed limit (60km/h)
-Sign 5: Children crossing          No Parking - Not in the dataset
+Sign 1: Road work                               Road work
+Sign 2: Roundabout mandatory                    No Stopping - Not in the dataset
+Sign 3: Right-of-way at the next intersection   Right-of-way at the next intersection
+Sign 4: Speed limit (60km/h)                    Speed limit (60km/h)
+Sign 5: Children crossing                       No Parking - Not in the dataset
 
+The model classifies 3 of the 5 traffic signs correctly but all 3 signs known to the model are classified with 100% accuracy.
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of 60.0%
-
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
-
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+The top five soft max probabilities for the 5 test data are below. The model classifies the first, third and fourth signs with almost 100% certainty. The rest two, second and fifth, are negative test cases where the model is expected to be not certain as these traffic signs are not in the training data.
 
 ['1.00000', '0.00000', '0.00000', '0.00000', '0.00000']
 ['0.72244', '0.27636', '0.00061', '0.00033', '0.00010']
@@ -180,7 +149,6 @@ For the first image, the model is relatively sure that this is a stop sign (prob
 ['0.99994', '0.00004', '0.00002', '0.00000', '0.00000']
 ['0.63904', '0.36041', '0.00031', '0.00019', '0.00003']
 
-### Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+### Visualizing the Neural Network
 
 
