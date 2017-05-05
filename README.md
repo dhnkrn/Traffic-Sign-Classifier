@@ -80,6 +80,7 @@ The image input goes through standard pre-processing steps meant for images. The
 2. Centering the image values -  (x_train-128.0)/128.0 as these values work well with CNNs that have RELU activations.
 
 Images before and after pre-processing.
+
 ![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/before.png)
 
 My model consisted of the following layers based on LeNet architecture.
