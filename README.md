@@ -38,6 +38,8 @@ Some key  statistics:
 Here is an exploratory vizualization of the data set. It is a bar chart showing how the data ...
 
 ![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/label_distribution.png)
+
+
 ClassID SignName                                                % Training  % Validation
 0       Speed limit (20km/h)                                     0.52       0.68
 1       Speed limit (30km/h)                                     5.69       5.44
@@ -90,7 +92,6 @@ The image input goes through standard pre-processing steps meant for images. The
 
 Images before and after pre-processing.
 ![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/before.png)
-![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/after.png)
 
 My model consisted of the following layers based on LeNet architecture.
 
@@ -113,6 +114,9 @@ My model consisted of the following layers based on LeNet architecture.
 To train the model, I used Stochastic Gradient Descent optimized by AdamOptimizer at a learning rate of 0.001. Each batch was a randomized sample of 128 training samples. The loss converged for the validation set at around 15 epochs training on CPU.
 
 The approach to classify the traffic symbols was to implement a standard Lenet-5 CNN and iteratively tune it to improve performance for this specific dataset. The Lenet-5 model comprises of a stack of two convolution layers and three fully connected layers with RELU activations interleaved betweeen them. The convolutions layers outputs are also fed through MaxPooling layers after RELU. One of the changes that improved performance for this dataset is the inclusion of dropout layers connected to fully-connected layers. This was added when I noticed the model was overfitting to the training data set. Learning rate, batch size and the probablity for the dropout layers were the most important hyperparameters that I had to tune. My initial learning rate of 0.1 with the GradientDescent optimizer was failing to train, possibly getting stuck at a local optima. Reducing learning rate by an order was sufficient to get the model to train. I also switched the optimizer to AdamOptimizer as it converged significantly faster than GradientDescent. 
+
+![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/accuracy_loss.png)
+
 
 The final model results, with just 14 epochs of training on CPU were - 
 * Training set accuracy of 0.993534
@@ -143,12 +147,14 @@ The model classifies 3 of the 5 traffic signs correctly but all 3 signs known to
 
 The top five soft max probabilities for the 5 test data are below. The model classifies the first, third and fourth signs with almost 100% certainty. The rest two, second and fifth, are negative test cases where the model is expected to be not certain as these traffic signs are not in the training data.
 
-['1.00000', '0.00000', '0.00000', '0.00000', '0.00000']
-['0.72244', '0.27636', '0.00061', '0.00033', '0.00010']
-['1.00000', '0.00000', '0.00000', '0.00000', '0.00000']
-['0.99994', '0.00004', '0.00002', '0.00000', '0.00000']
-['0.63904', '0.36041', '0.00031', '0.00019', '0.00003']
+'1.00000', '0.00000', '0.00000', '0.00000', '0.00000'
+'0.72244', '0.27636', '0.00061', '0.00033', '0.00010'
+'1.00000', '0.00000', '0.00000', '0.00000', '0.00000'
+'0.99994', '0.00004', '0.00002', '0.00000', '0.00000'
+'0.63904', '0.36041', '0.00031', '0.00019', '0.00003'
 
 ### Visualizing the Neural Network
+Vizualizing the parameters of the first convolution layer for a 60 km/hr traffic sign looks like this 
 
+![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/60_1.png)
 
