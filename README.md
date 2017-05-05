@@ -9,13 +9,12 @@
 **Build a Traffic Sign Recognition Project**
 
 The goals / steps of this project are the following:
-* Load the data set (see below for links to the project data set)
+* Load the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset)
 * Explore, summarize and visualize the data set
 * Design, train and test a model architecture
 * Use the model to make predictions on new images
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
-
 
 [//]: # (Image References)
 
@@ -28,74 +27,97 @@ The goals / steps of this project are the following:
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
-## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
 ---
-###Writeup / README
-
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ###Data Set Summary & Exploration
 
-####1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
+####1. Summary of the dataset.
 
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
+Number of training examples = 34799
+Number of validation examples = 4410
+Number of testing examples = 12630
+Image data shape = (32, 32, 3)
+pixel value max= 255 min= 0
+Number of classes = 43
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+####2. Vizualization of the dataset.
 
-####2. Include an exploratory visualization of the dataset.
+Here is an exploratory vizualization of the data set. It is a bar chart showing how the data ...
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
-
-![alt text][image1]
+![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/label_distribution.png)
+ClassID SignName                                                % Training  % Validation
+0       Speed limit (20km/h)                                     0.52       0.68
+1       Speed limit (30km/h)                                     5.69       5.44
+2       Speed limit (50km/h)                                     5.78       5.44
+3       Speed limit (60km/h)                                     3.62       3.40
+4       Speed limit (70km/h)                                     5.09       4.76
+5       Speed limit (80km/h)                                     4.74       4.76
+6       End of speed limit (80km/h)                              1.03       1.36
+7       Speed limit (100km/h)                                    3.71       3.40
+8       Speed limit (120km/h)                                    3.62       3.40
+9       No passing                                               3.79       3.40
+10      No passing for vehicles over 3.5 metric tons             5.17       4.76
+11      Right-of-way at the next intersection                    3.36       3.40
+12      Priority road                                            5.43       4.76
+13      Yield                                                    5.52       5.44
+14      Stop                                                     1.98       2.04
+15      No vehicles                                              1.55       2.04
+16      Vehicles over 3.5 metric tons prohibited                 1.03       1.36
+17      No entry                                                 2.84       2.72
+18      General caution                                          3.10       2.72
+19      Dangerous curve to the left                              0.52       0.68
+20      Dangerous curve to the right                             0.86       1.36
+21      Double curve                                             0.78       1.36
+22      Bumpy road                                               0.95       1.36
+23      Slippery road                                            1.29       1.36
+24      Road narrows on the right                                0.69       0.68
+25      Road work                                                3.88       3.40
+26      Traffic signals                                          1.55       1.36
+27      Pedestrians                                              0.60       0.68
+28      Children crossing                                        1.38       1.36
+29      Bicycles crossing                                        0.69       0.68
+30      Beware of ice/snow                                       1.12       1.36
+31      Wild animals crossing                                    1.98       2.04
+32      End of all speed and passing limits                      0.60       0.68
+33      Turn right ahead                                         1.72       2.04
+34      Turn left ahead                                          1.03       1.36
+35      Ahead only                                               3.10       2.72
+36      Go straight or right                                     0.95       1.36
+37      Go straight or left                                      0.52       0.68
+38      Keep right                                               5.34       4.76
+39      Keep left                                                0.78       0.68
+40      Roundabout mandatory                                     0.86       1.36
+41      End of no passing                                        0.60       0.68
+42      End of no passing by vehicles over 3.5 metric tons       0.60       0.68
 
 ###Design and Test a Model Architecture
+The pre-processing steps I used are-
+1. Conversion to gray scale - color is not a distinguishing feature for traffic signs. IOW there are no two traffic signs with different color but same symbols. 
+2. Center the image values -  (x_train-128.0)/128.0 as these values work with CNNs that have RELU activations.
 
-####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+Images before and after pre-processing.
+![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/before.png)
+![alt text](https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/after.png)
 
-As a first step, I decided to convert the images to grayscale because ...
-
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image2]
-
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
+My model consisted of the following layers based on LeNet architecture.
 
 
-####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
-
-My final model consisted of the following layers:
-
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
- 
+| Input         	        	| grayscale image   						    |        32x32x1          	 
+| Convolution1     5x5x1x6| 1x1x1 stride, VALID padding |outputs 28x28x6 	 
+| RELU1				               |			
+| Max pooling	      	2x2x1| 2x2x1 stride, VALID padding |outputs 14x14x6 			
+| Convolution2 	  5x5x6x16| 1x1x1 stride, VALID padding |outputs 10x10x16			
+| RELU2			               	|
+| Max pooling	      	2x2x1| 2x2x1 stride, VALID padding |outputs 5x5x16
+| Fully connected 	400x120|                             |outputs 120
+| RELU3				               |			
+| Dropout1                | 0.7
+| Fully connected 	 120x84|                             |outputs 84
+| RELU4			               	|			
+| Dropout2                | 0.7
+| Fully connected				84x43|                             |outputs 43
+| Softmax               		|
 
 
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
@@ -106,8 +128,8 @@ To train the model, I used an ....
 
 My final model results were:
 * training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* validation set accuracy of ?  0.944898
+* test set accuracy of ? 
 
 If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
@@ -136,17 +158,15 @@ The first image might be difficult to classify because ...
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
-
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+        Prediction                              Actual
+Sign 1: Road work                  Road work
+Sign 2: Roundabout mandatory       No Stopping - Not in the dataset
+Sign 3: Right-of-way at the next intersection       Right-of-way at the next intersection
+Sign 4: Speed limit (60km/h)       Speed limit (60km/h)
+Sign 5: Children crossing          No Parking - Not in the dataset
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of 60.0%
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
@@ -154,18 +174,13 @@ The code for making predictions on my final model is located in the 11th cell of
 
 For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+['1.00000', '0.00000', '0.00000', '0.00000', '0.00000']
+['0.72244', '0.27636', '0.00061', '0.00033', '0.00010']
+['1.00000', '0.00000', '0.00000', '0.00000', '0.00000']
+['0.99994', '0.00004', '0.00002', '0.00000', '0.00000']
+['0.63904', '0.36041', '0.00031', '0.00019', '0.00003']
 
-
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
+### Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 ####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
 
