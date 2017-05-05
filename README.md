@@ -114,13 +114,11 @@ The final model results, with just 14 epochs of training on CPU were -
 ###Test a Model on New Images
 
 Apart for testing the model on test data, I tested the model with five images of German traffic signs downloaded from the internet.
-
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_1.jpg" width="200" height="200" />
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_2.jpg" width="200" height="200" />
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_3.jpg" width="200" height="200" />
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_4.jpg" width="200" height="200" />
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_5.jpg" width="200" height="200" />
-
 
 One of the interesting things I noticed was the model fails to classify a "known" traffic sign if the sign is not centered  or does not cover a significant part of the image. Cropping the image to mostly include just the sign gives 100% accuracy. This shows that the dataset is insufficient and makes a good case for augmenting the data set with transformed images.
 
@@ -139,18 +137,18 @@ Sign 5: Children crossing                       No Parking - Not in the dataset
 The model classifies 3 of the 5 traffic signs correctly but all 3 signs known to the model are classified with 100% accuracy.
 
 The top five soft max probabilities for the 5 test data are below. The model classifies the first, third and fourth signs with almost 100% certainty. The rest two, second and fifth, are negative test cases where the model is expected to be not certain as these traffic signs are not in the training data.
-
+<pre>
         Prediction                             Actual
-Sign 1: Road work                               Road work                             '1.00', '0.00', '0.00', '0.00', '0.00'
+Sign 1: Road work                              Road work                             '1.00', '0.00', '0.00', '0.00', '0.00'
 
-Sign 2: Roundabout mandatory                    No Stopping - Not in the dataset      '0.72', '0.28', '0.00', '0.00', '0.00'
+Sign 2: Roundabout mandatory                   No Stopping - Not in the dataset      '0.72', '0.28', '0.00', '0.00', '0.00'
 
-Sign 3: Right-of-way at the next intersection   Right-of-way at the next intersection '1.00', '0.00', '0.00', '0.00', '0.00'
+Sign 3: Right-of-way at the next intersection  Right-of-way at the next intersection '1.00', '0.00', '0.00', '0.00', '0.00'
 
-Sign 4: Speed limit (60km/h)                    Speed limit (60km/h)                  '0.99', '0.00', '0.00', '0.00', '0.00'
+Sign 4: Speed limit (60km/h)                   Speed limit (60km/h)                  '0.99', '0.00', '0.00', '0.00', '0.00'
 
-Sign 5: Children crossing                       No Parking - Not in the dataset       '0.64', '0.36', '0.00', '0.00', '0.00'
-
+Sign 5: Children crossing                      No Parking - Not in the dataset       '0.64', '0.36', '0.00', '0.00', '0.00'
+</pre>
 
 ### Visualizing the Neural Network
 Vizualizing the parameters of the first convolution layer for a 60 km/hr traffic sign looks like this 
