@@ -12,18 +12,6 @@ The goals / steps of this project are the following:
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
 
-[//]: # (Image References)
-
-[image1]: ./images/german_1.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./images/german_1.jpg "Traffic Sign 1"
-[image5]: ./images/german_2.jpg "Traffic Sign 2"
-[image6]: ./images/german_3.jpg "Traffic Sign 3"
-[image7]: ./images/german_4.jpg "Traffic Sign 4"
-[image8]: ./images/german_5.jpg "Traffic Sign 5"
-
-
 ---
 
 ###Data Set Summary & Exploration
@@ -126,6 +114,7 @@ The final model results, with just 14 epochs of training on CPU were -
 ###Test a Model on New Images
 
 Apart for testing the model on test data, I tested the model with five images of German traffic signs downloaded from the internet.
+
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_1.jpg" width="200" height="200" />
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_2.jpg" width="200" height="200" />
 <img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_3.jpg" width="200" height="200" />
@@ -151,7 +140,7 @@ The model classifies 3 of the 5 traffic signs correctly but all 3 signs known to
 
 The top five soft max probabilities for the 5 test data are below. The model classifies the first, third and fourth signs with almost 100% certainty. The rest two, second and fifth, are negative test cases where the model is expected to be not certain as these traffic signs are not in the training data.
 
-         Prediction                              Actual
+        Prediction                             Actual
 Sign 1: Road work                               Road work                             '1.00', '0.00', '0.00', '0.00', '0.00'
 
 Sign 2: Roundabout mandatory                    No Stopping - Not in the dataset      '0.72', '0.28', '0.00', '0.00', '0.00'
