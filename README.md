@@ -147,11 +147,17 @@ The model classifies 3 of the 5 traffic signs correctly but all 3 signs known to
 
 The top five soft max probabilities for the 5 test data are below. The model classifies the first, third and fourth signs with almost 100% certainty. The rest two, second and fifth, are negative test cases where the model is expected to be not certain as these traffic signs are not in the training data.
 
-'1.00000', '0.00000', '0.00000', '0.00000', '0.00000'
-'0.72244', '0.27636', '0.00061', '0.00033', '0.00010'
-'1.00000', '0.00000', '0.00000', '0.00000', '0.00000'
-'0.99994', '0.00004', '0.00002', '0.00000', '0.00000'
-'0.63904', '0.36041', '0.00031', '0.00019', '0.00003'
+         Prediction                              Actual
+Sign 1: Road work                               Road work                             '1.00', '0.00', '0.00', '0.00', '0.00'
+
+Sign 2: Roundabout mandatory                    No Stopping - Not in the dataset      '0.72', '0.28', '0.00', '0.00', '0.00'
+
+Sign 3: Right-of-way at the next intersection   Right-of-way at the next intersection '1.00', '0.00', '0.00', '0.00', '0.00'
+
+Sign 4: Speed limit (60km/h)                    Speed limit (60km/h)                  '0.99', '0.00', '0.00', '0.00', '0.00'
+
+Sign 5: Children crossing                       No Parking - Not in the dataset       '0.64', '0.36', '0.00', '0.00', '0.00'
+
 
 ### Visualizing the Neural Network
 Vizualizing the parameters of the first convolution layer for a 60 km/hr traffic sign looks like this 
