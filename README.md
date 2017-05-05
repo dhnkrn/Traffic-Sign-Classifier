@@ -126,8 +126,12 @@ The final model results, with just 14 epochs of training on CPU were -
 ###Test a Model on New Images
 
 Apart for testing the model on test data, I tested the model with five images of German traffic signs downloaded from the internet.
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+<img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_1.jpg" width="200" height="200" />
+<img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_2.jpg" width="200" height="200" />
+<img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_3.jpg" width="200" height="200" />
+<img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_4.jpg" width="200" height="200" />
+<img src="https://raw.githubusercontent.com/dhnkrn/Traffic-Sign-Classifier/master/images/german_5.jpg" width="200" height="200" />
+
 
 One of the interesting things I noticed was the model fails to classify a "known" traffic sign if the sign is not centered  or does not cover a significant part of the image. Cropping the image to mostly include just the sign gives 100% accuracy. This shows that the dataset is insufficient and makes a good case for augmenting the data set with transformed images.
 
